@@ -1,66 +1,185 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Ethics/Risk Audit Assistant
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A production-ready Laravel application for auditing political content using AI-powered ethics and risk analysis. Built with Laravel 11, MySQL, and Mistral AI (Ministral-3-14B-Reasoning-2512).
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Project Management**: Organize political content audits into projects
+- **AI-Powered Ethics Auditing**: Automated risk assessment using Mistral AI
+- **Comprehensive Risk Rubric**: 7 risk categories including microtargeting, disinformation, emotional manipulation, and more
+- **Risk Scoring**: Automated risk level classification (low, medium, high, critical)
+- **Automated Notifications**: Email alerts for high-risk content detection
+- **Human Review Flags**: Auto-flagging of content requiring human oversight
+- **IRB/Ethics Export**: Export audit reports in HTML and Markdown formats
+- **Queue-Based Processing**: Background processing with automatic retries
+- **REST API**: Full API support for programmatic access
+- **Responsive Dashboard**: Clean Tailwind CSS interface
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend**: PHP 8.2+, Laravel 11
+- **Frontend**: Blade Templates + Tailwind CSS
+- **Database**: MySQL 8 / MariaDB
+- **AI**: Mistral Ministral-3-14B-Reasoning-2512
+- **Queue**: Database-backed queues
+- **Deployment**: Hostinger-compatible (shared hosting)
 
-## Learning Laravel
+## Risk Categories
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+The application evaluates content across 7 dimensions:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Microtargeting** (0-10): Exploitation of personal data, psychological profiles
+2. **Emotional Manipulation** (0-10): Fear-mongering, outrage exploitation
+3. **Disinformation** (0-10): False claims, misleading information
+4. **Voter Suppression** (0-10): Discouraging participation, false voting info
+5. **Vulnerable Populations** (0-10): Exploitation of children, elderly, disadvantaged groups
+6. **AI/Transparency** (0-10): Undisclosed AI content, synthetic media
+7. **Legal/Regulatory** (0-10): Election law violations, privacy breaches
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+### Prerequisites
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP 8.2 or higher
+- Composer
+- MySQL 8 or MariaDB
+- Node.js & NPM (for asset compilation)
+- Mistral API key
 
-### Premium Partners
+### Setup Steps
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd ethics-risk-audit-assistant
+   ```
 
-## Contributing
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. **Install JavaScript dependencies**
+   ```bash
+   npm install
+   ```
 
-## Code of Conduct
+4. **Environment configuration**
+   ```bash
+   cp .env.example .env
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. **Configure the `.env` file**
+   ```env
+   APP_NAME="Ethics Risk Audit Assistant"
+   APP_ENV=production
+   APP_DEBUG=false
+   APP_URL=https://your-domain.com
 
-## Security Vulnerabilities
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=ethics_risk_audit
+   DB_USERNAME=your_db_username
+   DB_PASSWORD=your_db_password
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   QUEUE_CONNECTION=database
+
+   MAIL_MAILER=smtp
+   MAIL_HOST=your-smtp-host
+   MAIL_PORT=587
+   MAIL_USERNAME=your-email@example.com
+   MAIL_PASSWORD=your-email-password
+   MAIL_FROM_ADDRESS="noreply@example.com"
+   MAIL_FROM_NAME="${APP_NAME}"
+
+   # Mistral AI Configuration
+   MISTRAL_API_KEY=your_mistral_api_key
+   MISTRAL_API_BASE=https://api.mistral.ai/v1
+   MISTRAL_MODEL=ministral-3-14b-reasoning-2512
+
+   # Ethics Configuration (Optional)
+   ETHICS_NOTIFICATIONS_ENABLED=true
+   ETHICS_NOTIFICATION_EMAIL=admin@example.com
+   ```
+
+6. **Generate application key**
+   ```bash
+   php artisan key:generate
+   ```
+
+7. **Run database migrations**
+   ```bash
+   php artisan migrate
+   ```
+
+8. **Build frontend assets**
+   ```bash
+   npm run build
+   ```
+
+9. **Create storage symlink**
+   ```bash
+   php artisan storage:link
+   ```
+
+10. **Set up cron job** (for queue processing and scheduler)
+    ```cron
+    * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+    ```
+
+11. **Start queue worker** (for development)
+    ```bash
+    php artisan queue:work --sleep=3 --tries=3
+    ```
+
+## Configuration
+
+### Risk Thresholds
+
+Edit `config/ethics.php` to customize risk thresholds and notification settings.
+
+## Usage
+
+### Web Interface
+
+1. Create a Project
+2. Add Items (political content)
+3. Items are automatically queued for ethics/risk analysis
+4. Review Results with detailed risk breakdowns
+5. Export IRB-style reports
+
+### API Endpoints
+
+**Projects:**
+- `GET /api/v1/projects` - List projects
+- `POST /api/v1/projects` - Create project
+- `GET /api/v1/projects/{id}` - Get project
+- `PUT /api/v1/projects/{id}` - Update project
+- `DELETE /api/v1/projects/{id}` - Delete project
+
+**Items:**
+- `GET /api/v1/items` - List items (supports filtering)
+- `POST /api/v1/items` - Create item (auto-queues for audit)
+- `GET /api/v1/items/{id}` - Get item
+- `POST /api/v1/items/{id}/reaudit` - Re-run audit
+- `POST /api/v1/items/{id}/mark-reviewed` - Mark as reviewed
+
+## File Structure
+
+```
+├── app/
+│   ├── Http/Controllers/          # Web & API controllers
+│   ├── Jobs/RunEthicsAudit.php   # Queue job for AI audits
+│   ├── Models/                    # Eloquent models
+│   ├── Notifications/             # Email notifications
+│   └── Services/MistralClient.php # Mistral AI integration
+├── config/ethics.php              # Ethics/risk configuration
+├── database/migrations/           # Database schema
+├── resources/views/               # Blade templates
+└── routes/                        # Web & API routes
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT License
