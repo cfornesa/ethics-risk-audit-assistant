@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\ProjectController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('projects', ProjectController::class);
     Route::apiResource('items', ItemController::class);
 
