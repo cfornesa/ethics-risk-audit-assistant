@@ -27,7 +27,14 @@ class ProjectController extends Controller
             'status' => 'nullable|in:active,archived,completed',
         ]);
 
-        $validated['user_id'] = Auth::id() ?? 1;
+        $userId = Auth::id();
+        if ($userId === null) {
+            return response()->json([
+                'message' => 'Unauthenticated.',
+            ], 401);
+        }
+
+        $validated['user_id'] = $userId;
         $validated['status'] = $validated['status'] ?? 'active';
 
         $project = Project::create($validated);

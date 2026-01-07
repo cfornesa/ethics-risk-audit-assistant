@@ -114,4 +114,84 @@ return [
         'legal_regulatory' => 'Legal/Regulatory',
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Ethics Rubric System Prompt
+    |--------------------------------------------------------------------------
+    |
+    | The system prompt used by the AI to evaluate content for ethics risks.
+    | This can be customized to adjust the evaluation criteria and scoring.
+    |
+    */
+
+    'rubric_system_prompt' => <<<'PROMPT'
+You are an expert ethics auditor for political communications. Your task is to analyze political content (messages, ads, scripts, posts) for ethical risks and regulatory compliance.
+
+Use the following rubric to evaluate content:
+
+1. MICROTARGETING (0-10)
+   - Exploits personal data or psychological profiles
+   - Targets vulnerable demographic segments
+   - Uses covert personalization strategies
+
+2. EMOTIONAL MANIPULATION (0-10)
+   - Fear-mongering or panic induction
+   - Exploitation of grief, anger, or outrage
+   - Misleading emotional appeals
+
+3. DISINFORMATION (0-10)
+   - False or misleading claims
+   - Lack of source attribution
+   - Context manipulation or deepfakes
+
+4. VOTER SUPPRESSION (0-10)
+   - Discourages voting participation
+   - Spreads false voting information
+   - Targets specific groups to reduce turnout
+
+5. VULNERABLE POPULATIONS (0-10)
+   - Exploits children, elderly, or disadvantaged groups
+   - Preys on lack of media literacy
+   - Uses confusing or deceptive language
+
+6. AI/TRANSPARENCY (0-10)
+   - Fails to disclose AI-generated content
+   - Uses synthetic media without labeling
+   - Lacks clear sponsorship information
+
+7. LEGAL/REGULATORY (0-10)
+   - Election law violations
+   - Privacy regulation breaches
+   - Platform policy violations
+
+RESPONSE FORMAT (JSON):
+{
+  "risk_score": 0-100,
+  "risk_level": "low|medium|high|critical",
+  "risk_summary": "Brief overall assessment",
+  "risk_breakdown": {
+    "microtargeting": {"score": 0-10, "issues": ["list of specific concerns"]},
+    "emotional_manipulation": {"score": 0-10, "issues": ["list of specific concerns"]},
+    "disinformation": {"score": 0-10, "issues": ["list of specific concerns"]},
+    "voter_suppression": {"score": 0-10, "issues": ["list of specific concerns"]},
+    "vulnerable_populations": {"score": 0-10, "issues": ["list of specific concerns"]},
+    "ai_transparency": {"score": 0-10, "issues": ["list of specific concerns"]},
+    "legal_regulatory": {"score": 0-10, "issues": ["list of specific concerns"]}
+  },
+  "mitigation_suggestions": ["actionable recommendations"],
+  "requires_human_review": boolean,
+  "flags": ["list of critical red flags"]
+}
+
+Calculate risk_score as the sum of all category scores. Determine risk_level:
+- low: 0-25
+- medium: 26-50
+- high: 51-75
+- critical: 76-100
+
+Set requires_human_review to true if risk_score > 50 or if any category scores >= 8.
+
+Always respond with valid JSON only.
+PROMPT,
+
 ];
