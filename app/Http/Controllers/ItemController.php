@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreItemRequest;
+use App\Http\Requests\UpdateItemRequest;
 use App\Jobs\RunEthicsAudit;
 use App\Models\Item;
 use App\Models\Project;
@@ -26,20 +28,12 @@ class ItemController extends Controller
         return view('items.create', compact('projects', 'selectedProject'));
     }
 
-    public function store(Request $request)
+    public function store(StoreItemRequest $request)
     {
-        $validated = $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'content_type' => 'required|in:message,ad,script,post,other',
-        ]);
-
+        $validated = $request->validated();
         $validated['status'] = 'pending';
 
         $item = Item::create($validated);
-
-        RunEthicsAudit::dispatch($item);
 
         return redirect()->route('items.show', $item)
             ->with('success', 'Item created and queued for ethics audit.');
@@ -59,16 +53,9 @@ class ItemController extends Controller
         return view('items.edit', compact('item', 'projects'));
     }
 
-    public function update(Request $request, Item $item)
+    public function update(UpdateItemRequest $request, Item $item)
     {
-        $validated = $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'content_type' => 'required|in:message,ad,script,post,other',
-        ]);
-
-        $item->update($validated);
+        $item->update($request->validated());
 
         if ($request->has('reaudit')) {
             $item->update([
